@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DAVOM IA</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <img src="{{ url_for('static', filename='moon-fill.svg') }}" alt="Moon Icon" class="icon">
+                DAVOM IA
+            </div>
+            <div class="icons">
+                <a href="/perfil">
+                    <img src="{{ url_for('static', filename='person-gear.svg') }}" alt="Perfil" class="icon">
+                </a>
+                <a href="/logout">
+                    <img src="{{ url_for('static', filename='box-arrow-left.svg') }}" alt="Salir" class="icon">
+                </a>
+            </div>
+        </header>
+        <main>
+            <div class="input-container">
+                <input type="text" id="pregunta" placeholder="Escribe tu pregunta...">
+                <button onclick="generarRespuesta()">Generar respuesta</button>
+            </div>
+            <div id="conversacion" class="conversacion">
+                <!-- Aquí se mostrarán las preguntas y respuestas -->
+            </div>
+        </main>
+    </div>
+    <script>
+        async function generarRespuesta() {
+            const pregunta = document.getElementById('pregunta').value.trim();
+            
+            if (!pregunta) {
+                agregarMensaje('Por favor, ingrese una pregunta válida.', 'error');
+                return;
+            }
+
+            // Añadir la pregunta a la conversación
+            agregarMensaje(pregunta, 'pregunta');
+
+            try {
+                const response = await fetch('/consultar', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ pregunta: pregunta })
+                });
+
+                if (!response.ok) {
+                    throw new Error('Error en la solicitud: ' + response.statusText);
+                }
+
+                const data = await response.json();
+                agregarMensaje(data.respuesta, 'respuesta');
+            } catch (error) {
+                agregarMensaje('Hubo un error al generar la respuesta. Por favor, inténtelo de nuevo.', 'error');
+                console.error('Error:', error);
+            }
+
+            document.getElementById('pregunta').value = ''; // Limpiar el campo de entrada
+        }
+
+        function agregarMensaje(mensaje, tipo) {
+            const conversacion = document.getElementById('conversacion');
+            const mensajeDiv = document.createElement('div');
+            mensajeDiv.classList.add('mensaje', tipo);
+            mensajeDiv.innerText = mensaje;
+            conversacion.appendChild(mensajeDiv);
+            conversacion.scrollTop = conversacion.scrollHeight; // Desplazar hacia abajo
+        }
+    </script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .icon {
+            width: 24px;
+            height: 24px;
+            margin-right: 10px;
+        }
+        .input-container {
+            display: flex;
+            margin-bottom: 20px;
+        }
+        #pregunta {
+            flex-grow: 1;
+            padding: 10px;
+            font-size: 16px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+        }
+        .conversacion {
+            border: 1px solid #000000;
+            padding: 10px;
+            height: 400px;
+            overflow-y: scroll;
+        }
+        .mensaje {
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+        }
+        .pregunta {
+            background-color: #6b6b6b;
+            text-align: right;
+        }
+        .respuesta {
+            background-color: #373636;
+        }
+        .error {
+            background-color: #3e3d3d;
+        }
+    </style>
+</body>
+</html>

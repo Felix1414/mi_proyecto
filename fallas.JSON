@@ -1,0 +1,100 @@
+[
+    {
+      "informacion_operador": {
+        "nombre_operador": "Óscar Armando",
+        "puesto": "Operador",
+        "turno": 2,
+        "fecha_hora_falla": "26/07/24"
+      },
+      "informacion_maquina": {
+        "tipo_maquina": "Coiler",
+        "nombre_id_maquina": "#1",
+        "modelo": "DW"
+      },
+      "descripcion_falla": {
+        "descripcion_problema": "Alambre reventado constantemente cuando se usa una canastilla",
+        "codigo_error": "N/A",
+        "estado_maquina_antes_falla": "Maquina funcionando bien",
+        "acciones_realizadas_antes_falla": "Cambio de canastilla"
+      },
+      "acciones_tomadas": {
+        "acciones_tomadas_operador": "Se quita el alambre atorado en el formador y se enhebra nuevamente el alambre",
+        "herramientas_utilizadas": "Pinzas de corte",
+        "acciones_tomadas_solucion_problema": [
+          "Se levanta tapa de canastilla para evitar demasiada tensión en el alambre",
+          "Se revisa si la manguera o el tubo guía del alambre no presenta movimientos extraños y esta bien guiado"
+        ],
+        "resultados": "Ya no se reventó el alambre",
+        "requiere_asistencia_tecnica": "No",
+        "comentarios_adicionales": "Se podria implementar una Abrazadera sin fin que vaya sujeta al los tubos y se encuentre entre alambre y la tapa"
+      }
+    },
+    {
+      "informacion_operador": {
+        "nombre_operador": "Gabriel García",
+        "puesto": "Líder",
+        "turno": 2,
+        "fecha_hora_falla": "26/07/24"
+      },
+      "informacion_maquina": {
+        "tipo_maquina": "Ensambladora",
+        "nombre_id_maquina": "#1",
+        "modelo": "N/A"
+      },
+      "descripcion_falla": {
+        "descripcion_problema": "Desfase de tira en colchón",
+        "codigo_error": "N/A",
+        "estado_maquina_antes_falla": "Se realiza cambio de modelo",
+        "acciones_realizadas_antes_falla": "Cambio de modelo en coilers"
+      },
+      "acciones_tomadas": {
+        "acciones_tomadas_operador": "N/A",
+        "herramientas_utilizadas": "N/A",
+        "acciones_tomadas_solucion_problema": [
+          "Revisar la medida del resorte, bolsas en todas las coiler",
+          "Revisar que la altura de la mesa esté correcta"
+        ],
+        "resultados": "Se soluciona el desfase",
+        "requiere_asistencia_tecnica": "No",
+        "comentarios_adicionales": "N/A"
+      }
+    },
+    {
+      "informacion_operador": {
+        "nombre_operador": "Carlos Valdés",
+        "puesto": "Líder",
+        "turno": 2,
+        "fecha_hora_falla": "26/07/24"
+      },
+      "informacion_maquina": {
+        "tipo_maquina": "Ensambladora",
+        "nombre_id_maquina": "#1",
+        "modelo": "N/A"
+      },
+      "descripcion_falla": {
+        "descripcion_problema": "Pocket despegado",
+        "codigo_error": "N/A",
+        "estado_maquina_antes_falla": [
+          "Boquillas mal ajustadas",
+          "Tela mal acomodada",
+          "Tira mal centrada en la tela"
+        ]
+      },
+      "acciones_tomadas": {
+        "acciones_tomadas_operador": "N/A",
+        "herramientas_utilizadas": [
+          "Llave española 5",
+          "Llave 6 Allen"
+        ],
+        "acciones_tomadas_solucion_problema": [
+          "Centrar la posición del pegamento",
+          "Centrar la tela con la tira",
+          "Ajustar recorrido de pegamento"
+        ],
+        "resultados": "N/A",
+        "requiere_asistencia_tecnica": "N/A",
+        "comentarios_adicionales": "N/A"
+      }
+    }
+  ]
+  
