@@ -15,47 +15,27 @@ def obtener_respuesta(pregunta):
 
     # Buscar la pregunta en el JSON de fallas
     for falla in fallas_data:
-        try:
-            if pregunta.lower() in falla['descripcion_falla']['descripcion_problema'].lower():
-                # Crear una respuesta conversacional con formato mejorado
-                operador = falla['informacion_operador']['nombre_operador']
-                puesto = falla['informacion_operador']['puesto']
-                descripcion = falla['descripcion_falla']['descripcion_problema']
-                acciones = "\n- ".join(falla['acciones_tomadas']['acciones_tomadas_solucion_problema'])
-                resultado = falla['acciones_tomadas']['resultados']
-                comentarios = falla['acciones_tomadas']['comentarios_adicionales'] if falla['acciones_tomadas']['comentarios_adicionales'] != 'N/A' else 'No hay comentarios adicionales.'
-
-                mensaje = (
-                    f"El operador {operador} ({puesto}) reportó el siguiente problema: {descripcion}.\n\n"
-                    f"Para solucionar este problema, se realizaron las siguientes acciones:\n"
-                    f"- {acciones}\n\n"
-                    f"El resultado de estas acciones fue: {resultado}.\n\n"
-                    f"Comentarios adicionales: {comentarios}."
-                )
-                return {"mensaje": mensaje}
-        except KeyError as e:
-            print(f"KeyError: {e} en {falla}")
+        if pregunta.lower() in falla['FALLA'].lower():
+            # Crear una respuesta conversacional con formato mejorado
+            falla_descripcion = falla['FALLA']
+            solucion = "\n- ".join(falla['SOLUCION'])
+            
+            mensaje = (
+                f"Problema reportado: {falla_descripcion}.\n\n"
+                f"Solución: \n- {solucion}"
+            )
+            return {"mensaje": mensaje}
 
     # Si no se encuentra, utilizar OpenAI como respaldo
     ejemplos = ""
     for falla in fallas_data:
-        try:
-            operador = falla['informacion_operador']['nombre_operador']
-            puesto = falla['informacion_operador']['puesto']
-            descripcion = falla['descripcion_falla']['descripcion_problema']
-            acciones = "\n- ".join(falla['acciones_tomadas']['acciones_tomadas_solucion_problema'])
-            resultado = falla['acciones_tomadas']['resultados']
-            comentarios = falla['acciones_tomadas']['comentarios_adicionales'] if falla['acciones_tomadas']['comentarios_adicionales'] != 'N/A' else 'No hay comentarios adicionales.'
+        descripcion = falla['FALLA']
+        solucion = "\n- ".join(falla['SOLUCION'])
 
-            ejemplos += (
-                f"Problema: {descripcion}\n"
-                f"Operador: {operador} ({puesto})\n\n"
-                f"Acciones tomadas:\n- {acciones}\n\n"
-                f"Resultado: {resultado}\n\n"
-                f"Comentarios: {comentarios}\n\n"
-            )
-        except KeyError as e:
-            print(f"KeyError: {e} en {falla}")
+        ejemplos += (
+            f"Problema: {descripcion}\n"
+            f"Solución:\n- {solucion}\n\n"
+        )
 
     prompt = f"{ejemplos}Pregunta: {pregunta}\nRespuesta:"
 
@@ -71,6 +51,14 @@ def obtener_respuesta(pregunta):
         return {"mensaje": respuesta.choices[0].message['content'].strip()}
     except Exception as e:
         return {"mensaje": f"Error al obtener respuesta de OpenAI: {str(e)}"}
+
+@app.route('/coiler')
+def coiler():
+    return render_template('coiler.html')
+
+@app.route('/ensambladora')
+def ensambladora():
+    return render_template('ensambladora.html')
 
 @app.route('/')
 def index():
